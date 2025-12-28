@@ -1,0 +1,44 @@
+.layout {
+  min-height: 100vh;
+}
+
+.layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #2a2a4a;
+  background: rgba(42, 42, 61, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.layout-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #8a9cce;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+.layout-header nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  background: transparent;
+  border: 1px solid #4a5568;
+  color: #8a8a9a;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.nav-button:hover {
+  border-color: #6b8cce;
+  color: #c0c0d0;
+}

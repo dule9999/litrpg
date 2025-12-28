@@ -1,0 +1,48 @@
+:root {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #d0d0d8;
+  background: linear-gradient(180deg, #2a2a3d 0%, #3a3a52 100%);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+}
+
+button {
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid #6b8cce;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #4a5580;
+  color: #ffffff;
+}

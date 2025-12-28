@@ -1,0 +1,55 @@
+.diary {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.diary-title {
+  font-size: 1.5rem;
+  color: #8a9cce;
+  margin: 0 0 2rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #3a3a5a;
+}
+
+.diary-empty {
+  color: #6a6a7a;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+.diary-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.diary-chapter {
+  background: rgba(30, 40, 60, 0.5);
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.diary-chapter-title {
+  font-size: 1.2rem;
+  color: #c0c0d0;
+  margin: 0 0 1rem 0;
+  font-weight: 400;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #3a3a5a;
+}
+
+.diary-chapter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.diary-entry {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #a0a0b0;
+  margin: 0;
+}

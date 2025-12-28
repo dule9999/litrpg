@@ -1,0 +1,36 @@
+{
+  "chapter": 1,
+  "title": "The Old Man's Hovel",
+  "rules": [
+    {
+      "id": "diary_left_early",
+      "condition": "helped === false",
+      "text": "Encountered an old man at a hovel, sleeping outside in fear of something in his cellar. Left without helping. Not my problem."
+    },
+    {
+      "id": "diary_helped_noble",
+      "condition": "helped && payment === 'noble'",
+      "text": "Cleared the old man's cellar without asking for payment. He had nothing but a wedding ring - I let him keep it."
+    },
+    {
+      "id": "diary_helped_greedy",
+      "condition": "helped && payment === 'greedy'",
+      "text": "Cleared the old man's cellar. Took his wedding ring as payment - his dead wife's ring, all he had left of her."
+    },
+    {
+      "id": "diary_creature",
+      "condition": "creature_killed",
+      "text": "Killed a corrupted rat in the cellar - bloated, twisted, weeping green pus. Whatever caused this mutation is not natural."
+    },
+    {
+      "id": "diary_intel",
+      "condition": "payment === 'noble' && creature_killed",
+      "text": "The old man's reward: intel. Bandits hold the stone bridge to Millbrook. Six or more, careless at dawn. A ford lies two miles upstream."
+    },
+    {
+      "id": "diary_ring",
+      "condition": "has_ring",
+      "text": "Acquired: Gold ring with ruby. Could be sold, or kept."
+    }
+  ]
+}

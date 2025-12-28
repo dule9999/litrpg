@@ -1,0 +1,94 @@
+{
+  "chapter": 1,
+  "title": "The Old Man's Hovel",
+  "initialFlags": {
+    "helped": false,
+    "payment": "none",
+    "creature_killed": false,
+    "has_intel": false,
+    "has_ring": false
+  },
+  "startSceneId": "arrival",
+  "scenes": [
+    {
+      "id": "arrival",
+      "text": "The horse stumbles on the muddy path, and you let it. Neither of you has much left to give.\n\nYou rode through the night, putting distance between yourself and the war. Your side lost. Everyone you knew is dead or scattered. The wound in your side has stopped bleeding, but dried blood cracks on your hands when you grip the reins.\n\nThrough the grey morning mist, a hovel emerges on the hilltop. Smoke trickles from a crooked chimney. As you approach, you notice something odd: a man lies in a wooden cart before the house, wrapped in a threadbare blanket, sleeping in the cold rather than inside.\n\nThe creak of your horse's harness wakes him. The old man bolts upright, grabbing a pitchfork with trembling hands. His eyes are milky, squinting.\n\n\"Halt! Who goes there?\" His voice cracks. \"Announce yourself!\"",
+      "choices": [
+        { "text": "\"Easy, old man. I mean no harm. Why are you sleeping out here in the cold?\"", "nextSceneId": "cellar_problem" },
+        { "text": "\"I need water for my horse. What you do with your cart is your business.\"", "nextSceneId": "cellar_problem" }
+      ]
+    },
+    {
+      "id": "cellar_problem",
+      "text": "The old man lowers his pitchfork slowly, studying you with those failing eyes.\n\n\"You're not one of them,\" he mutters. \"The things that come at night.\"\n\nHe gestures toward the hovel, and you see genuine fear there.\n\n\"Three nights ago, something moved into my cellar. Don't know what it is. But I can hear it down there - scratching, shuffling. And the SMELL...\" He grimaces. \"Like a battlefield left to rot, but worse. Wrong, somehow.\"\n\nHe wrings his hands.\n\n\"That's why I'm out here freezing. Whatever's down there... it ain't natural. I'm too old and too blind to face it. But you...\" He studies you. \"You've got the look of a man who's seen dark things.\"\n\nHis voice drops to a plea.\n\n\"Help me. Please. I've got nothing to offer, but please.\"",
+      "choices": [
+        {
+          "text": "\"I've seen my share of dark things. Show me this cellar.\"",
+          "nextSceneId": "payment_decision",
+          "setFlags": { "helped": true }
+        },
+        {
+          "text": "\"Not my problem, old man. I've got my own troubles.\"",
+          "nextSceneId": "ending_left"
+        }
+      ]
+    },
+    {
+      "id": "payment_decision",
+      "text": "Relief floods the old man's face. He nearly drops the pitchfork.\n\n\"You would? Truly?\" He wipes his eyes with a dirty sleeve. \"I... I wish I could pay you, stranger. But I've got nothing. Nothing of value.\"\n\nHe wrings his hands - and you notice something. A glint of gold on his finger. A ring, worn smooth by decades. He sees you looking and instinctively covers it with his other hand.\n\n\"The cellar door is around the side,\" he continues quickly. \"I barred it from outside three nights ago. Whatever's down there... it's been growing. Getting louder.\"",
+      "choices": [
+        {
+          "text": "\"Keep your ring, old man. I'll do this for nothing.\"",
+          "nextSceneId": "confrontation",
+          "setFlags": { "payment": "noble" }
+        },
+        {
+          "text": "\"That ring on your finger. That'll do as payment.\"",
+          "nextSceneId": "confrontation",
+          "setFlags": { "payment": "greedy", "has_ring": true }
+        }
+      ]
+    },
+    {
+      "id": "confrontation",
+      "text": "The cellar door is set into the ground - two heavy wooden panels, barred from the outside with a thick oak beam. Deep scratches mark the wood from below, fresh and pale against the weathered grey.\n\nYou draw your sword. The blade is notched and stained, but the edge is keen.\n\nYou lift the bar and throw open the doors. Stone steps descend into darkness. The smell rolls over you - death and sweetness and something chemical.\n\nYou descend. The light fades. Something moves in the darkness - a wet, shuffling sound.\n\nAs your eyes adjust, you make out the shape. It might have been a rat once. Now it's bloated to the size of a dog, skin stretched and malformed, weeping green pus from cracks in its hide. Its eyes gleam with feral hunger. Claws like rusted knives scrape the stone.\n\nIt sees you. It hisses. And it charges.\n\nThe fight is brutal and desperate. The creature is fast - faster than it should be. Its claws rake your arm, drawing blood. But you're a soldier. You've killed before.\n\nYour blade finds its heart. Green ichor pours over your hands as the thing thrashes, screams, and dies.\n\nThe world spins. Your wounds, your exhaustion - it all catches up at once.\n\nYou fall.",
+      "choices": [
+        {
+          "text": "...",
+          "nextSceneId": "resolution",
+          "setFlags": { "creature_killed": true }
+        }
+      ]
+    },
+    {
+      "id": "resolution",
+      "textVariants": [
+        {
+          "condition": "payment === 'noble'",
+          "text": "You wake to warmth and the smell of smoke. A fire crackles nearby.\n\nYou're lying on a straw mattress inside the hovel. Bandages wrap your arm. Someone has cleaned the blood from your hands.\n\nThe old man sits by the fire, watching you.\n\n\"Thought I'd lost you,\" he says quietly. \"The thing in the cellar - it's dead. I burned it. Whatever it was... it wasn't of this world.\"\n\nHe brings you a bowl of thin soup.\n\n\"You helped me for nothing. Asked for nothing. There aren't many like you left.\" He pauses. \"So I'm going to give you something anyway. Information.\"\n\nHe leans closer.\n\n\"The road to Millbrook - past the old mill, there's a stone bridge. Bandits have been working it for weeks. Six of them, maybe more. They killed the miller and his boy.\" His voice drops. \"But they're careless at dawn. Sleep in shifts in the mill ruins. And there's a ford two miles upstream.\"\n\nHe sits back.\n\n\"That's what I've got to give. Use it or don't. But you've earned it.\"\n\nYou spend the night by his fire. In the morning, you ride on toward Millbrook - and a bridge you now know to avoid.\n\n[End of Chapter 1 - The Compassionate Path]"
+        },
+        {
+          "condition": "payment === 'greedy'",
+          "text": "You wake to cold and dim light. You're on a straw mattress inside the hovel. Bandages wrap your arm.\n\nThe old man sits by a meager fire. His expression is unreadable.\n\n\"You're awake,\" he says flatly. \"The thing in the cellar is dead. I burned it.\"\n\nHe doesn't offer food. Doesn't ask how you feel.\n\n\"Your horse is outside. Your sword too - I cleaned it.\" He looks at the fire. \"You did what I asked. We're square.\"\n\nHis hand goes to his chest, where the ring used to hang on a cord. Old habit.\n\nThe ring is in your pocket now. You can feel its weight.\n\n\"You should go,\" he says. \"I've got nothing else for you here.\"\n\nHe doesn't look at you again.\n\nYou gather your things in silence and ride. The old man knew something about the road ahead - you could see it in his eyes. But he didn't share it. Why would he?\n\nSome knowledge can't be bought. Only earned.\n\n[End of Chapter 1 - The Pragmatic Path]"
+        }
+      ],
+      "text": "",
+      "choices": [
+        {
+          "text": "Continue to Chapter 2",
+          "nextSceneId": "chapter2_start"
+        }
+      ]
+    },
+    {
+      "id": "ending_left",
+      "text": "The old man's face falls. The hope drains from his eyes.\n\n\"I... I understand,\" he says quietly. \"It's not your burden.\"\n\nYou water your horse at the well behind the hovel. The old man watches from his cart, saying nothing. When you ride away, he's still there, staring at his home. At whatever waits inside.\n\nThe road stretches grey before you. The war is over. Your side lost. And somewhere behind you, an old man waits for something to crawl up from his cellar.\n\nNot your problem.\n\n[End of Chapter 1 - Path of Indifference]",
+      "choices": [
+        {
+          "text": "Continue to Chapter 2",
+          "nextSceneId": "chapter2_start"
+        }
+      ]
+    }
+  ]
+}
