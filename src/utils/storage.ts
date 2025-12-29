@@ -1,11 +1,20 @@
 import type { GameState } from '@types';
+import { chapter1 } from '@scenes';
 
 const STORAGE_KEY = 'litrpg_game_state';
 
+const DEFAULT_CHARACTER = {
+  equipment: ['Rusty sword'],
+  valuables: [],
+};
+
 const DEFAULT_STATE: GameState = {
-  currentSceneId: 'scene1_arrival',
+  currentChapter: 1,
+  currentSceneId: chapter1.startSceneId,
+  flags: { ...chapter1.initialFlags },
   history: [],
-  unlockedDiaryIds: [],
+  chapterOutcomes: {},
+  character: { ...DEFAULT_CHARACTER },
 };
 
 export function loadGameState(): GameState {
@@ -16,13 +25,15 @@ export function loadGameState(): GameState {
       return {
         ...DEFAULT_STATE,
         ...parsed,
-        unlockedDiaryIds: parsed.unlockedDiaryIds || [],
+        flags: parsed.flags || { ...chapter1.initialFlags },
+        chapterOutcomes: parsed.chapterOutcomes || {},
+        character: parsed.character || { ...DEFAULT_CHARACTER },
       };
     }
   } catch (e) {
     console.error('Failed to load game state:', e);
   }
-  return DEFAULT_STATE;
+  return { ...DEFAULT_STATE, character: { ...DEFAULT_CHARACTER } };
 }
 
 export function saveGameState(state: GameState): void {
@@ -35,5 +46,5 @@ export function saveGameState(state: GameState): void {
 
 export function resetGameState(): GameState {
   localStorage.removeItem(STORAGE_KEY);
-  return DEFAULT_STATE;
+  return { ...DEFAULT_STATE, flags: { ...chapter1.initialFlags }, character: { ...DEFAULT_CHARACTER } };
 }

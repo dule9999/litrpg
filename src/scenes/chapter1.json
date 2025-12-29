@@ -6,7 +6,8 @@
     "payment": "none",
     "creature_killed": false,
     "has_intel": false,
-    "has_ring": false
+    "has_ring": false,
+    "left_without_helping": false
   },
   "startSceneId": "arrival",
   "scenes": [
@@ -29,7 +30,8 @@
         },
         {
           "text": "\"Not my problem, old man. I've got my own troubles.\"",
-          "nextSceneId": "ending_left"
+          "nextSceneId": "ending_left",
+          "setFlags": { "left_without_helping": true }
         }
       ]
     },
@@ -45,7 +47,8 @@
         {
           "text": "\"That ring on your finger. That'll do as payment.\"",
           "nextSceneId": "confrontation",
-          "setFlags": { "payment": "greedy", "has_ring": true }
+          "setFlags": { "payment": "greedy", "has_ring": true },
+          "addItems": { "valuables": ["Gold ring"] }
         }
       ]
     },
@@ -76,7 +79,14 @@
       "choices": [
         {
           "text": "Continue to Chapter 2",
-          "nextSceneId": "chapter2_start"
+          "nextSceneId": "approach",
+          "condition": "payment === 'noble'",
+          "setFlags": { "has_intel": true }
+        },
+        {
+          "text": "Continue to Chapter 2",
+          "nextSceneId": "approach",
+          "condition": "payment === 'greedy'"
         }
       ]
     },
@@ -86,7 +96,7 @@
       "choices": [
         {
           "text": "Continue to Chapter 2",
-          "nextSceneId": "chapter2_start"
+          "nextSceneId": "approach"
         }
       ]
     }

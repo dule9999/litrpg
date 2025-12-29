@@ -30,6 +30,9 @@ The possible end-states of a chapter. Typically 2-4 outcomes, each carrying diff
 ### Text Variants
 Scenes can have different text based on flags, allowing one scene ID to serve multiple story branches.
 
+### Conditional Choices
+Choices can be shown or hidden based on flags. Use this to gate options behind previous decisions.
+
 ---
 
 ## Chapter Structure
@@ -100,20 +103,102 @@ For scenes that display differently based on earlier choices:
 
 The game engine evaluates conditions in order and displays the first matching variant.
 
+### Single-Choice Scenes
+
+Not every scene needs multiple choices. Some scenes can have just one choice to continue:
+
+```json
+{
+  "id": "aftermath",
+  "text": "The battle is over. You stand among the fallen...",
+  "choices": [
+    {
+      "text": "...",
+      "nextSceneId": "next_scene"
+    }
+  ]
+}
+```
+
+This is appropriate for:
+- Aftermath/resolution scenes
+- Transitions between chapters
+- Moments where the narrative needs to breathe
+
 ---
 
 ## Choice Structure
+
+### Basic Choice
 
 ```json
 {
   "text": "What the player sees",
   "nextSceneId": "where_it_goes",
-  "setFlags": { "flag": "value" }  // Optional
+  "setFlags": { "flag": "value" }
 }
 ```
 
-- `setFlags` is optional - only include when this choice changes game state
-- Multiple flags can be set in one choice: `{ "helped": true, "payment": "noble" }`
+### Conditional Choice
+
+Choices can have conditions - they only appear when the condition is true:
+
+```json
+{
+  "text": "The old man mentioned a ford upstream. Find it.",
+  "nextSceneId": "ford_crossing",
+  "condition": "has_intel"
+}
+```
+
+Use conditional choices to:
+- Gate options behind previous decisions
+- Reward players who earned information/items
+- Punish players who took shortcuts
+
+---
+
+## Consequences Philosophy
+
+**Choices have real consequences. Bad decisions get punished.**
+
+### Don't Give Free Hints
+
+If a player didn't earn information, don't give them hints that "something feels off." They walk into the trap because they don't know any better.
+
+**Wrong:**
+```json
+// Player has no intel but gets a warning anyway
+{
+  "condition": "!has_intel",
+  "text": "The mill looks abandoned, but something feels off. You could search for another way..."
+}
+```
+
+**Right:**
+```json
+// Player has no intel, sees nothing suspicious
+{
+  "condition": "!has_intel",
+  "text": "The mill looks abandoned. Peaceful. Your horse is tired. The bridge is right there."
+}
+// And the ford option is NOT available to them
+```
+
+### Consequences Examples
+
+| Chapter 1 Choice | Chapter 2 Consequence |
+|------------------|----------------------|
+| Helped for free → got intel | Can avoid bandits via ford, or attack with surprise |
+| Took the ring → no intel | Walk into ambush, get robbed, lose everything |
+| Has ring at bandits | Can bribe way through |
+| No ring at bandits | Must fight or lose sword |
+
+### Delayed Punishment
+
+The worst outcomes often come from seemingly "smart" choices:
+- Taking the ring = immediate reward, but later you get robbed
+- Leaving the old man = save time, but walk into ambush without warning
 
 ---
 
@@ -149,6 +234,7 @@ Conditions use JavaScript-like boolean expressions:
 - `helped && payment === 'noble'` - AND
 - `has_ring || has_intel` - OR
 - `creature_killed` - truthy check
+- `!has_intel` - negation
 
 ### Diary Rules Guidelines
 
@@ -159,23 +245,29 @@ Conditions use JavaScript-like boolean expressions:
 
 ---
 
-## The Two-Choice System
+## Choice Design
 
-Every scene has exactly **2 choices** (with rare exceptions for single-choice continuations):
+Scenes typically have **2 choices**, but this is flexible:
 
-### Choice 1: The Compassionate Path
+### The Compassionate Path
 - Shows care for others
 - Selflessness, empathy, connection
 - Builds trust with NPCs
 - Often rewards: **lore, intel, warnings, relationships**
 
-### Choice 2: The Pragmatic Path
+### The Pragmatic Path
 - Self-interest, survival
 - Pragmatic decisions
 - May alienate NPCs
 - Often rewards: **items, gold, immediate material gain**
 
-Neither path is "wrong" - they offer different advantages.
+### When to Use Fewer/More Choices
+
+**1 choice:** Aftermath scenes, chapter transitions, dramatic pauses
+
+**2 choices:** Standard decision points (compassionate vs pragmatic)
+
+**3+ choices:** Complex negotiations where multiple approaches exist (attack/bribe/negotiate), but only if choices are conditional based on what player has available
 
 ---
 
@@ -232,19 +324,44 @@ HELPED_GREEDY → 3 entries (helped, killed creature, got ring)
 
 ---
 
+## Chapter Transitions
+
+When transitioning between chapters:
+
+1. Set `nextSceneId` to the new chapter's start scene
+2. Include the new chapter's initial flags in `setFlags`
+3. The game automatically updates `currentChapter` when entering a new chapter's scene
+
+```json
+{
+  "text": "Continue to Chapter 2",
+  "nextSceneId": "approach",
+  "setFlags": {
+    "went_over_bridge": false,
+    "bandits_attacked": false,
+    "was_robbed": false
+  }
+}
+```
+
+---
+
 ## Branching Guidelines
 
 ### DO:
 - Use flags to track choices
 - Use textVariants for scenes that differ by path
+- Use conditional choices to gate options
 - Keep to 2-4 outcomes per chapter
 - Ensure every path has diary entries
+- Punish bad choices with consequences
 
 ### DON'T:
 - Create separate scenes for every possible combination
 - Branch exponentially (14 paths in one chapter)
 - Leave any path without diary entries
-- Make scenes that are only reachable by one specific combination
+- Give hints to uninformed players
+- Let pragmatic choices have no downsides
 
 ---
 
@@ -275,6 +392,7 @@ This creates meaningful consequences without exponential branching.
 - **Avoid gratuitous gore** - Violence present but not vivid
 - **Moral ambiguity** - "Good" choices can have negative consequences
 - **Consequences matter** - Choices ripple forward
+- **No hand-holding** - Players face the results of their choices
 
 ---
 
@@ -297,11 +415,15 @@ Background:
 ```
 src/
 ├── scenes/
-│   └── chapter1.json      # Scene definitions
+│   ├── chapter1.json     # Scene definitions
+│   ├── chapter2.json
+│   └── index.ts          # Exports all chapters
 ├── diaryLogs/
-│   └── chapter1.json      # Diary rules
+│   ├── chapter1.json     # Diary rules
+│   ├── chapter2.json
+│   └── index.ts          # Exports all diary chapters
 └── types/
-    └── scene.ts           # TypeScript interfaces
+    └── scene.ts          # TypeScript interfaces
 ```
 
 ---
@@ -314,4 +436,26 @@ src/
 | Pivot Points | Major decisions that branch story (1-3 per chapter) |
 | Outcomes | End-states of a chapter (2-4 per chapter) |
 | Text Variants | Same scene, different text based on flags |
+| Conditional Choices | Choices that only appear based on flags |
 | Diary Rules | Condition-based entry generation |
+
+---
+
+## Technical Notes
+
+### Condition Evaluation
+
+Conditions are evaluated using JavaScript's `new Function()`. Flag names become variables:
+
+```javascript
+// Condition: "has_intel && !was_robbed"
+// Becomes: new Function('has_intel', 'was_robbed', 'return has_intel && !was_robbed')
+```
+
+### Auto Chapter Detection
+
+When navigating to a scene, the game automatically detects which chapter owns that scene and updates `currentChapter` in the game state.
+
+### Flag Persistence
+
+Flags persist across chapters. Chapter 1 flags are still available in Chapter 2. When transitioning chapters, include the new chapter's initial flags in `setFlags` to initialize them.

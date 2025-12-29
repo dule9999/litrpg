@@ -35,10 +35,34 @@
 .diary-chapter-title {
   font-size: 1.2rem;
   color: #c0c0d0;
-  margin: 0 0 1rem 0;
+  margin: 0;
   font-weight: 400;
   padding-bottom: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.diary-chapter-title::-webkit-details-marker {
+  display: none;
+}
+
+.diary-chapter-title::before {
+  content: '▶';
+  font-size: 0.7rem;
+  color: #6a6a8a;
+  transition: transform 0.2s ease;
+}
+
+.diary-chapter[open] > .diary-chapter-title::before {
+  transform: rotate(90deg);
+}
+
+.diary-chapter[open] > .diary-chapter-title {
   border-bottom: 1px solid #3a3a5a;
+  margin-bottom: 1rem;
 }
 
 .diary-chapter-content {

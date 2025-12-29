@@ -1,0 +1,204 @@
+{
+  "chapter": 2,
+  "title": "Crossing the River",
+  "initialFlags": {
+    "used_ford": false,
+    "went_over_bridge": false,
+    "bandits_attacked": false,
+    "was_robbed": false,
+    "gave_ring_to_bandits": false,
+    "killed_bandit_brother": false,
+    "chapter2_complete": false
+  },
+  "startSceneId": "approach",
+  "scenes": [
+    {
+      "id": "approach",
+      "textVariants": [
+        {
+          "condition": "has_intel",
+          "text": "The road winds through sparse woodland before opening onto a river valley. There it is - the old mill the old man warned you about, its waterwheel still and silent. Beyond it, a stone bridge spans the river.\n\nYou halt your horse at the treeline. The mill ruins look abandoned, but you know better. Six bandits, maybe more. Careless at dawn, the old man said. But it's midday now, and you can see movement in the shadows.\n\nTwo miles upstream, there's a ford. You could avoid this entirely."
+        },
+        {
+          "condition": "!has_intel",
+          "text": "The road winds through sparse woodland before opening onto a river valley. An old mill sits beside the river, its waterwheel still and silent. Beyond it, a stone bridge spans the water - your path to Millbrook.\n\nThe mill looks abandoned. Peaceful, even. Your horse is tired. The bridge is right there."
+        }
+      ],
+      "text": "",
+      "choices": [
+        {
+          "text": "Head for the bridge.",
+          "nextSceneId": "bridge_encounter"
+        },
+        {
+          "text": "The old man mentioned a ford upstream. Find it.",
+          "nextSceneId": "ford_crossing",
+          "condition": "has_intel"
+        }
+      ]
+    },
+    {
+      "id": "ford_crossing",
+      "text": "You follow the old man's directions, riding two miles upstream. The river widens here, the water shallow enough to see the rocky bottom. A ford, just as he said.\n\nYour horse splashes across without complaint. On the far bank, you turn to look back. Somewhere downstream, bandits wait for travelers who don't know any better.\n\nNot your problem today.\n\nYou continue on. The road curves through gentle hills, and after another hour of riding, you crest a rise. There, in the valley below, lies Millbrook - a modest settlement of wooden buildings clustered around a central square. Smoke rises from chimneys. Life.\n\n[End of Chapter 2 - The Cautious Path]",
+      "choices": [
+        {
+          "text": "Continue to Chapter 3",
+          "nextSceneId": "chapter3_start",
+          "setFlags": { "used_ford": true, "chapter2_complete": true }
+        }
+      ]
+    },
+    {
+      "id": "bridge_encounter",
+      "textVariants": [
+        {
+          "condition": "has_intel",
+          "text": "You guide your horse toward the bridge, keeping to the shadows. As the old man warned, you spot them - men lounging in the mill ruins, passing a wineskin. One picks at his nails with a knife. Another stands watch on the bridge itself, though his attention is elsewhere.\n\nSix that you can see. Maybe more inside.\n\nYou have the advantage of surprise. They don't know you're here. You could strike first - or step forward and try to talk your way through."
+        },
+        {
+          "condition": "!has_intel",
+          "text": "You ride onto the bridge without hesitation. The mill is quiet. The river flows peacefully beneath you.\n\nYou're halfway across when they appear.\n\nMen emerge from the mill ruins - five, six, more. Armed with clubs, rusted swords, farm tools turned weapons. They block both ends of the bridge. A heavyset man with a scarred face steps forward, grinning.\n\n\"Well, well. A traveler. Alone.\" He spits. \"You know how this works. Everything you've got, or we throw you in the river.\"\n\nYour hand goes to your sword, but you're surrounded. Fighting your way out would be suicide."
+        }
+      ],
+      "text": "",
+      "choices": [
+        {
+          "text": "Attack while you have the element of surprise.",
+          "nextSceneId": "bridge_attack",
+          "condition": "has_intel"
+        },
+        {
+          "text": "Step forward to negotiate.",
+          "nextSceneId": "bridge_bargain",
+          "condition": "has_intel"
+        },
+        {
+          "text": "Surrender your possessions. You can't fight them all.",
+          "nextSceneId": "ambush_confrontation",
+          "condition": "!has_intel"
+        }
+      ]
+    },
+    {
+      "id": "bridge_attack",
+      "text": "You spur your horse forward, drawing your sword in one fluid motion. The watchman on the bridge barely has time to shout before you're on him, blade flashing. He goes down.\n\nThe others scramble for weapons, but you're already among them. A soldier's training takes over - economy of motion, controlled violence. You cut down one, then another. The rest scatter, all except one.\n\nHe's bigger than the others, broader. He comes at you with a woodsman's axe, roaring. But he's untrained, and you've killed better men than him. Your blade opens his throat.\n\nSilence. The survivors have fled into the trees.\n\nYou dismount to search the dead. The big man has a coin purse on his belt - thirty silver marks. Not bad for a bandit.\n\nOne of the fallen is still breathing, barely. He looks at the big man's corpse and laughs - a wet, bubbling sound.\n\n\"You killed Rodrik,\" he gasps. \"Garrett's brother. Garrett's going to... he's going to...\" The laughter turns to coughing, then stops.\n\nYou pocket the silver, clean your blade, and ride on.\n\n[End of Chapter 2 - The Violent Path]",
+      "choices": [
+        {
+          "text": "Continue to Chapter 3",
+          "nextSceneId": "chapter3_start",
+          "setFlags": { "went_over_bridge": true, "bandits_attacked": true, "killed_bandit_brother": true, "chapter2_complete": true },
+          "addItems": { "valuables": ["30 silver marks"] }
+        }
+      ]
+    },
+    {
+      "id": "bridge_bargain",
+      "text": "You ride forward slowly, hands visible. The watchman on the bridge spots you and shouts. Men pour from the mill, weapons ready.\n\nA heavyset man with a scarred face steps forward. \"Hold,\" he tells the others. To you: \"A wise choice, stranger. Most folk who come this way don't see us until it's too late.\"\n\nHe looks you over - the worn armor, the notched sword, the soldier's bearing.\n\n\"We're not murderers. Just businessmen. This bridge is ours. You want to cross, you pay the toll.\" He grins, showing missing teeth. \"Everything you've got ought to cover it.\"\n\nYou have nothing of value except your sword, your horse, and the clothes on your back.",
+      "choices": [
+        {
+          "text": "\"I'll give you my sword. It's worth something.\"",
+          "nextSceneId": "bridge_robbed"
+        },
+        {
+          "text": "Draw your sword and attack.",
+          "nextSceneId": "bridge_attack"
+        }
+      ]
+    },
+    {
+      "id": "bridge_robbed",
+      "text": "\"Your sword?\" The bandit laughs. \"We'll take that. And your horse. And your armor. And everything else.\"\n\nHe gestures to his men. They move forward.\n\nYou knew this was a risk. You chose to bargain instead of fight. Now you pay the price.\n\nThey beat you. Not to kill - just to make a point. Fists and boots, methodical and thorough. When they're done, you're lying in the mud, bleeding from a dozen cuts, watching them lead your horse away.\n\n\"Walk to Millbrook,\" the scarred man says, tossing your empty waterskin at your feet. \"It's not far. Consider this a lesson in negotiation.\"\n\nThey leave you there. After a while, you manage to stand. Everything hurts. You have nothing - no horse, no sword, no supplies. Just the clothes on your back and a long walk ahead.",
+      "choices": [
+        {
+          "text": "Begin the long walk to Millbrook.",
+          "nextSceneId": "walk_to_millbrook",
+          "setFlags": { "went_over_bridge": true, "was_robbed": true, "lost_sword": true },
+          "removeItems": { "equipment": ["Rusty sword"] }
+        }
+      ]
+    },
+    {
+      "id": "ambush_confrontation",
+      "textVariants": [
+        {
+          "condition": "has_ring",
+          "text": "They drag you from your horse before you can draw your sword. Within moments, you're disarmed and surrounded. The scarred man takes your blade, examines it, tosses it to one of his men.\n\n\"The horse too,\" he says. They lead it away.\n\nHe turns back to you, studying your face. \"Most travelers beg. Cry. You're just standing there.\" He spits. \"Soldier, are you? Thought so.\"\n\nHe steps closer.\n\n\"Soldiers always have something hidden. A coin purse. A trinket. Something.\" His eyes narrow. \"Empty your pockets. Now. Or my boys will empty them for you - after they've had their fun.\""
+        },
+        {
+          "condition": "!has_ring",
+          "text": "They drag you from your horse before you can draw your sword. Within moments, you're disarmed and surrounded. The scarred man takes your blade, examines it, tosses it to one of his men.\n\n\"The horse too,\" he says. They lead it away.\n\nHe turns back to you. \"That's it? That's all you've got?\" He sounds disappointed.\n\n\"Well, boys. Might as well have some fun anyway.\""
+        }
+      ],
+      "text": "",
+      "choices": [
+        {
+          "text": "\"I have a gold ring. Take it and let me go.\"",
+          "nextSceneId": "ambush_ring_given",
+          "condition": "has_ring"
+        },
+        {
+          "text": "\"I have nothing else.\"",
+          "nextSceneId": "ambush_beaten",
+          "condition": "has_ring"
+        },
+        {
+          "text": "...",
+          "nextSceneId": "ambush_beaten",
+          "condition": "!has_ring"
+        }
+      ]
+    },
+    {
+      "id": "ambush_ring_given",
+      "text": "You reach into your pocket and pull out the ring. Gold with a ruby - the old man's wedding ring. The one you took from him.\n\nThe scarred man's eyes widen. He snatches it, holds it to the light.\n\n\"Well, well. A proper treasure.\" He bites it, grins. \"This changes things. Boys - let him go.\"\n\nThe men part reluctantly. You walk through them, feeling their eyes on your back. No horse. No sword. No ring.\n\nBut no beating either. Small mercies.\n\nYou continue on foot. The road stretches ahead, and after an hour of walking, you crest a rise. There, in the valley below, lies Millbrook.\n\n[End of Chapter 2 - The Merchant's Loss]",
+      "choices": [
+        {
+          "text": "Continue to Chapter 3",
+          "nextSceneId": "chapter3_start",
+          "setFlags": {
+            "went_over_bridge": true,
+            "was_robbed": true,
+            "gave_ring_to_bandits": true,
+            "has_ring": false,
+            "lost_sword": true,
+            "chapter2_complete": true
+          },
+          "removeItems": { "equipment": ["Rusty sword"], "valuables": ["Gold ring"] }
+        }
+      ]
+    },
+    {
+      "id": "ambush_beaten",
+      "textVariants": [
+        {
+          "condition": "has_ring",
+          "text": "\"Nothing?\" The scarred man's face hardens. \"We'll see about that.\"\n\nThey beat you. Methodical. Thorough. Fists and boots. You curl into a ball, arms protecting your head. They kick your ribs, your back, your legs. You taste blood.\n\nWhen they search your clothes, they find nothing - you tucked the ring into your boot when they weren't looking. Small victory.\n\n\"Waste of time,\" the scarred man mutters. \"Leave him.\"\n\nThey leave you in the mud. After a while, you manage to stand. Everything hurts. Your ribs might be cracked. But the ring is still in your boot. Cold comfort."
+        },
+        {
+          "condition": "!has_ring",
+          "text": "They beat you. Not because they expect to find anything else - just for sport. Fists and boots, laughter and curses. When they're done, you're lying in the mud, bleeding from a dozen cuts.\n\n\"Walk to Millbrook,\" the scarred man says, tossing your empty waterskin at your feet. \"It's not far. Consider this a lesson in caution.\"\n\nThey leave you there. After a while, you manage to stand. Everything hurts. You have nothing. Just the clothes on your back and a long walk ahead."
+        }
+      ],
+      "text": "",
+      "choices": [
+        {
+          "text": "Begin the long walk to Millbrook.",
+          "nextSceneId": "walk_to_millbrook",
+          "setFlags": { "went_over_bridge": true, "was_robbed": true, "lost_sword": true },
+          "removeItems": { "equipment": ["Rusty sword"] }
+        }
+      ]
+    },
+    {
+      "id": "walk_to_millbrook",
+      "text": "You limp across the bridge, past the mill, onto the road beyond. Every step is pain. Your ribs might be cracked. Your face is swelling.\n\nBut you keep walking.\n\nThe road curves through gentle hills. It takes longer on foot, battered as you are. The sun is setting by the time you crest the final rise.\n\nThere, in the valley below, lies Millbrook. Smoke rises from chimneys. Torches are being lit as darkness falls.\n\nYou made it. Barely. With nothing.\n\nBut you made it.\n\n[End of Chapter 2 - The Survivor's Path]",
+      "choices": [
+        {
+          "text": "Continue to Chapter 3",
+          "nextSceneId": "chapter3_start",
+          "setFlags": { "chapter2_complete": true }
+        }
+      ]
+    }
+  ]
+}

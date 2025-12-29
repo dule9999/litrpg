@@ -4,7 +4,7 @@
   "rules": [
     {
       "id": "diary_left_early",
-      "condition": "helped === false",
+      "condition": "left_without_helping",
       "text": "Encountered an old man at a hovel, sleeping outside in fear of something in his cellar. Left without helping. Not my problem."
     },
     {

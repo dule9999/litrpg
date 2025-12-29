@@ -1,0 +1,41 @@
+{
+  "chapter": 2,
+  "title": "Crossing the River",
+  "rules": [
+    {
+      "id": "diary_ford_crossing",
+      "condition": "used_ford",
+      "text": "Crossed the river at a ford upstream. Avoided the old mill and bridge entirely. The old man's intel proved valuable."
+    },
+    {
+      "id": "diary_bridge_attack",
+      "condition": "bandits_attacked",
+      "text": "Attacked the bandits at the bridge. Had the element of surprise. Killed several, including a big man with an axe. The survivors fled."
+    },
+    {
+      "id": "diary_bargain_fail",
+      "condition": "was_robbed && has_intel",
+      "text": "Tried to bargain with the bandits. Offered my sword. They took everything and beat me. Should have attacked when I had the chance."
+    },
+    {
+      "id": "diary_ambush_gave_ring",
+      "condition": "was_robbed && gave_ring_to_bandits",
+      "text": "Walked into an ambush at the bridge. They took my horse and sword. Gave them the ring to avoid a beating. Left with nothing but my life."
+    },
+    {
+      "id": "diary_ambush_hid_ring",
+      "condition": "was_robbed && has_ring",
+      "text": "Walked into an ambush. They took my horse and sword, then beat me. But I hid the ring in my boot. They didn't find it."
+    },
+    {
+      "id": "diary_ambush_no_ring",
+      "condition": "was_robbed && !has_ring && !gave_ring_to_bandits && !has_intel",
+      "text": "Walked into an ambush at the bridge. Had nothing of value. They beat me anyway for sport. Walked to Millbrook with nothing."
+    },
+    {
+      "id": "diary_millbrook_arrival",
+      "condition": "chapter2_complete",
+      "text": "Reached Millbrook. A modest settlement in the valley. A place to rest and figure out what comes next."
+    }
+  ]
+}

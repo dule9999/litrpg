@@ -3,7 +3,7 @@ import './Diary.css';
 
 export default function DiaryPage() {
   const gameState = loadGameState();
-  const chapters = getUnlockedChapters(gameState.unlockedDiaryIds);
+  const chapters = getUnlockedChapters(gameState.flags, gameState.currentChapter);
 
   return (
     <div className="diary">
@@ -15,15 +15,19 @@ export default function DiaryPage() {
         </p>
       ) : (
         <div className="diary-chapters">
-          {chapters.map((chapter) => (
-            <section key={chapter.chapter} className="diary-chapter">
-              <h3 className="diary-chapter-title">{chapter.chapter}</h3>
+          {chapters.map((chapter, index) => (
+            <details
+              key={chapter.chapter}
+              className="diary-chapter"
+              open={index === chapters.length - 1}
+            >
+              <summary className="diary-chapter-title">{chapter.title}</summary>
               <div className="diary-chapter-content">
                 {chapter.entries.map((entry) => (
                   <p key={entry.id} className="diary-entry">{entry.text}</p>
                 ))}
               </div>
-            </section>
+            </details>
           ))}
         </div>
       )}

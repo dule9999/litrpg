@@ -1,0 +1,11 @@
+{
+  "chapter": 0,
+  "title": "Prologue",
+  "rules": [
+    {
+      "id": "diary_background",
+      "condition": "true",
+      "text": "The war is over. My side lost. Everyone I knew is dead or scattered. I ride with a wound in my side, a notched sword, and a tired horse. No destination. No allegiance. Just the road ahead."
+    }
+  ]
+}

@@ -26,6 +26,9 @@ export function Layout({ children }: LayoutProps) {
           <button className="nav-button" onClick={() => navigate('/diary')}>
             Diary
           </button>
+          <button className="nav-button" onClick={() => navigate('/character')}>
+            Character
+          </button>
           <button className="nav-button" onClick={handleNewGame}>
             New Game
           </button>

@@ -1,22 +1,53 @@
-import type { DiaryEntry, DiaryChapter } from '@types';
-import { getDiaryChapters, getDiaryEntryBySceneId, getAllDiaryEntries } from '../diaryLogs';
+import { getDiaryChapters, getDiaryRulesForChapter } from '../diaryLogs';
+import { evaluateCondition } from './scenes';
 
-export function getUnlockedChapters(unlockedIds: string[]): DiaryChapter[] {
+export interface EvaluatedDiaryEntry {
+  id: string;
+  text: string;
+}
+
+export interface EvaluatedDiaryChapter {
+  chapter: number;
+  title: string;
+  entries: EvaluatedDiaryEntry[];
+}
+
+// Evaluate diary rules against current flags and return matching entries
+export function getUnlockedDiaryEntries(
+  chapterNum: number,
+  flags: Record<string, string | boolean | number>
+): EvaluatedDiaryEntry[] {
+  const rules = getDiaryRulesForChapter(chapterNum);
+  return rules
+    .filter(rule => evaluateCondition(rule.condition, flags))
+    .map(rule => ({
+      id: rule.id,
+      text: rule.text,
+    }));
+}
+
+// Get all diary entries for display, organized by chapter
+export function getUnlockedChapters(
+  flags: Record<string, string | boolean | number>,
+  currentChapter: number
+): EvaluatedDiaryChapter[] {
   const chapters = getDiaryChapters();
-  return chapters
-    .map(chapter => ({
-      ...chapter,
-      entries: chapter.entries.filter(entry => unlockedIds.includes(entry.id)),
-    }))
-    .filter(chapter => chapter.entries.length > 0);
-}
+  const result: EvaluatedDiaryChapter[] = [];
 
-export function checkForNewDiaryEntry(sceneId: string, unlockedIds: string[]): DiaryEntry | null {
-  const entry = getDiaryEntryBySceneId(sceneId);
-  if (entry && !unlockedIds.includes(entry.id)) {
-    return entry;
+  for (const chapter of chapters) {
+    if (chapter.chapter <= currentChapter) {
+      const entries = getUnlockedDiaryEntries(chapter.chapter, flags);
+      if (entries.length > 0) {
+        result.push({
+          chapter: chapter.chapter,
+          title: chapter.title,
+          entries,
+        });
+      }
+    }
   }
-  return null;
+
+  return result;
 }
 
-export { getDiaryChapters, getDiaryEntryBySceneId, getAllDiaryEntries };
+export { getDiaryChapters, getDiaryRulesForChapter };

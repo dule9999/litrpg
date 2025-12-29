@@ -1,31 +1,37 @@
-import { useState, useEffect, useRef } from 'react';
-import type { Scene as SceneType, GameState } from '@types';
-import { loadGameState, saveGameState, resetGameState, getScene, checkForNewDiaryEntry } from '@utils';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import type { GameState, Choice } from '@types';
+import { loadGameState, saveGameState, resetGameState, getScene, getSceneText, evaluateCondition, getChapterForScene, getChapter } from '@utils';
 import './Scene.css';
 
-function SceneDisplay({ scene, onChoice }: { scene: SceneType; onChoice: (nextSceneId: string) => void }) {
+interface SceneDisplayProps {
+  sceneText: string;
+  choices: Choice[];
+  onChoice: (choice: Choice) => void;
+}
+
+function SceneDisplay({ sceneText, choices, onChoice }: SceneDisplayProps) {
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (textRef.current) {
       textRef.current.scrollTop = 0;
     }
-  }, [scene.id]);
+  }, [sceneText]);
 
   return (
     <div className="scene">
       <div className="scene-text" ref={textRef}>
-        {scene.text.split('\n').map((line, i) => (
+        {sceneText.split('\n').map((line, i) => (
           <p key={i}>{line || <br />}</p>
         ))}
       </div>
 
       <div className="scene-choices">
-        {scene.choices.map((choice, index) => (
+        {choices.map((choice, index) => (
           <button
             key={index}
             className="choice-button"
-            onClick={() => onChoice(choice.nextSceneId)}
+            onClick={() => onChoice(choice)}
           >
             {choice.text}
           </button>
@@ -39,30 +45,71 @@ export default function ScenePage() {
   const [gameState, setGameState] = useState<GameState>(loadGameState);
 
   const currentScene = getScene(gameState.currentSceneId);
+  const sceneText = currentScene ? getSceneText(currentScene, gameState.flags) : '';
+
+  // Filter choices based on conditions
+  const visibleChoices = useMemo(() => {
+    if (!currentScene) return [];
+    return currentScene.choices.filter(choice => {
+      if (!choice.condition) return true;
+      return evaluateCondition(choice.condition, gameState.flags);
+    });
+  }, [currentScene, gameState.flags]);
 
   useEffect(() => {
     saveGameState(gameState);
   }, [gameState]);
 
-  useEffect(() => {
-    const newEntry = checkForNewDiaryEntry(gameState.currentSceneId, gameState.unlockedDiaryIds);
-    if (newEntry) {
-      setGameState(prev => ({
-        ...prev,
-        unlockedDiaryIds: [...prev.unlockedDiaryIds, newEntry.id],
-      }));
-    }
-  }, []);
-
-  const handleChoice = (nextSceneId: string) => {
+  const handleChoice = (choice: Choice) => {
     setGameState(prev => {
-      const newEntry = checkForNewDiaryEntry(nextSceneId, prev.unlockedDiaryIds);
+      // Check if we're entering a new chapter
+      const newChapterNum = getChapterForScene(choice.nextSceneId);
+      const isNewChapter = newChapterNum !== undefined && newChapterNum !== prev.currentChapter;
+
+      // If entering a new chapter, merge in that chapter's initial flags
+      let newFlags = { ...prev.flags };
+      if (isNewChapter) {
+        const newChapterData = getChapter(newChapterNum);
+        if (newChapterData) {
+          newFlags = { ...newFlags, ...newChapterData.initialFlags };
+        }
+      }
+
+      // Apply any flags from this choice (after chapter flags, so choice can override)
+      if (choice.setFlags) {
+        newFlags = { ...newFlags, ...choice.setFlags };
+      }
+
+      // Update character inventory
+      let newCharacter = { ...prev.character };
+      if (choice.addItems) {
+        if (choice.addItems.equipment) {
+          newCharacter.equipment = [...newCharacter.equipment, ...choice.addItems.equipment];
+        }
+        if (choice.addItems.valuables) {
+          newCharacter.valuables = [...newCharacter.valuables, ...choice.addItems.valuables];
+        }
+      }
+      if (choice.removeItems) {
+        if (choice.removeItems.equipment) {
+          newCharacter.equipment = newCharacter.equipment.filter(
+            item => !choice.removeItems!.equipment!.includes(item)
+          );
+        }
+        if (choice.removeItems.valuables) {
+          newCharacter.valuables = newCharacter.valuables.filter(
+            item => !choice.removeItems!.valuables!.includes(item)
+          );
+        }
+      }
+
       return {
-        currentSceneId: nextSceneId,
+        ...prev,
+        currentChapter: newChapterNum ?? prev.currentChapter,
+        currentSceneId: choice.nextSceneId,
         history: [...prev.history, prev.currentSceneId],
-        unlockedDiaryIds: newEntry
-          ? [...prev.unlockedDiaryIds, newEntry.id]
-          : prev.unlockedDiaryIds,
+        flags: newFlags,
+        character: newCharacter,
       };
     });
   };
@@ -80,5 +127,11 @@ export default function ScenePage() {
     );
   }
 
-  return <SceneDisplay scene={currentScene} onChoice={handleChoice} />;
+  return (
+    <SceneDisplay
+      sceneText={sceneText}
+      choices={visibleChoices}
+      onChoice={handleChoice}
+    />
+  );
 }
