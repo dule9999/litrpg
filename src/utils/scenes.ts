@@ -1,4 +1,4 @@
-import type { Scene, ChapterData } from '@types';
+import type { Scene, ChapterData, GameState } from '@types';
 import { chapter1, chapter2 } from '@scenes';
 
 // All chapters
@@ -35,31 +35,35 @@ export function getChapterForScene(sceneId: string): number | undefined {
   return undefined;
 }
 
-// Evaluate a condition string against flags
+// Evaluate a condition string against game state
+// Supports both storyFlags (as direct variables) and completedPaths array
 export function evaluateCondition(
   condition: string,
-  flags: Record<string, string | boolean | number>
+  storyFlags: Record<string, string | boolean | number>,
+  completedPaths: string[] = []
 ): boolean {
   try {
-    // Create a function that evaluates the condition with flags as variables
-    const flagKeys = Object.keys(flags);
-    const flagValues = Object.values(flags);
-    const fn = new Function(...flagKeys, `return ${condition};`);
-    return fn(...flagValues);
+    // Create evaluation context with flags as direct variables + completedPaths array
+    const flagKeys = Object.keys(storyFlags);
+    const flagValues = Object.values(storyFlags);
+    const fn = new Function(...flagKeys, 'completedPaths', `return ${condition};`);
+    return fn(...flagValues, completedPaths);
   } catch (e) {
     console.error('Failed to evaluate condition:', condition, e);
     return false;
   }
 }
 
-// Get the appropriate text for a scene based on flags
-export function getSceneText(
-  scene: Scene,
-  flags: Record<string, string | boolean | number>
-): string {
+// Convenience function to evaluate condition from full game state
+export function evaluateConditionFromState(condition: string, state: GameState): boolean {
+  return evaluateCondition(condition, state.storyFlags, state.completedPaths);
+}
+
+// Get the appropriate text for a scene based on game state
+export function getSceneText(scene: Scene, state: GameState): string {
   if (scene.textVariants && scene.textVariants.length > 0) {
     for (const variant of scene.textVariants) {
-      if (evaluateCondition(variant.condition, flags)) {
+      if (evaluateConditionFromState(variant.condition, state)) {
         return variant.text;
       }
     }

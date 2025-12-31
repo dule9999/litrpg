@@ -1,15 +1,6 @@
 {
   "chapter": 2,
   "title": "Crossing the River",
-  "initialFlags": {
-    "used_ford": false,
-    "went_over_bridge": false,
-    "bandits_attacked": false,
-    "was_robbed": false,
-    "gave_ring_to_bandits": false,
-    "killed_bandit_brother": false,
-    "chapter2_complete": false
-  },
   "startSceneId": "approach",
   "scenes": [
     {
@@ -44,7 +35,9 @@
         {
           "text": "Continue to Chapter 3",
           "nextSceneId": "chapter3_start",
-          "setFlags": { "used_ford": true, "chapter2_complete": true }
+          "effects": {
+            "addPath": "ch2_ford"
+          }
         }
       ]
     },
@@ -86,8 +79,11 @@
         {
           "text": "Continue to Chapter 3",
           "nextSceneId": "chapter3_start",
-          "setFlags": { "went_over_bridge": true, "bandits_attacked": true, "killed_bandit_brother": true, "chapter2_complete": true },
-          "addItems": { "valuables": ["30 silver marks"] }
+          "effects": {
+            "setFlag": { "killed_bandit_brother": true },
+            "addSilver": 30,
+            "addPath": "ch2_bridge_attack"
+          }
         }
       ]
     },
@@ -112,8 +108,11 @@
         {
           "text": "Begin the long walk to Millbrook.",
           "nextSceneId": "walk_to_millbrook",
-          "setFlags": { "went_over_bridge": true, "was_robbed": true, "lost_sword": true },
-          "removeItems": { "equipment": ["Rusty sword"] }
+          "effects": {
+            "removeItems": { "weapons": ["rusty_sword"] },
+            "injure": 1,
+            "addPath": "ch2_robbed_bargain"
+          }
         }
       ]
     },
@@ -155,15 +154,11 @@
         {
           "text": "Continue to Chapter 3",
           "nextSceneId": "chapter3_start",
-          "setFlags": {
-            "went_over_bridge": true,
-            "was_robbed": true,
-            "gave_ring_to_bandits": true,
-            "has_ring": false,
-            "lost_sword": true,
-            "chapter2_complete": true
-          },
-          "removeItems": { "equipment": ["Rusty sword"], "valuables": ["Gold ring"] }
+          "effects": {
+            "setFlag": { "has_ring": false },
+            "removeItems": { "weapons": ["rusty_sword"], "equipment": ["gold_ring"] },
+            "addPath": "ch2_gave_ring"
+          }
         }
       ]
     },
@@ -184,8 +179,11 @@
         {
           "text": "Begin the long walk to Millbrook.",
           "nextSceneId": "walk_to_millbrook",
-          "setFlags": { "went_over_bridge": true, "was_robbed": true, "lost_sword": true },
-          "removeItems": { "equipment": ["Rusty sword"] }
+          "effects": {
+            "removeItems": { "weapons": ["rusty_sword"] },
+            "injure": 2,
+            "addPath": "ch2_beaten"
+          }
         }
       ]
     },
@@ -196,7 +194,9 @@
         {
           "text": "Continue to Chapter 3",
           "nextSceneId": "chapter3_start",
-          "setFlags": { "chapter2_complete": true }
+          "effects": {
+            "addPath": "ch2_survived"
+          }
         }
       ]
     }

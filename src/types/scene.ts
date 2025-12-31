@@ -1,17 +1,102 @@
+// Health system
+export const HEALTH_CONDITIONS = [
+  'full_health',
+  'slightly_injured',
+  'moderately_injured',
+  'heavily_injured',
+  'dying',
+] as const;
+
+export type HealthCondition = typeof HEALTH_CONDITIONS[number];
+
+export const HEALTH_DISPLAY_NAMES: Record<HealthCondition, string> = {
+  full_health: 'Full health',
+  slightly_injured: 'Slightly injured',
+  moderately_injured: 'Moderately injured',
+  heavily_injured: 'Heavily injured',
+  dying: 'Dying',
+};
+
+export const HEALTH_ATTACK_MODIFIERS: Record<HealthCondition, number | null> = {
+  full_health: 1,
+  slightly_injured: 0,
+  moderately_injured: -1,
+  heavily_injured: -2,
+  dying: null, // Cannot attack
+};
+
+// Item system
+export type ItemCategory = 'armor' | 'weapon' | 'magic' | 'equipment' | 'valuables';
+
+export interface Item {
+  id: string;
+  name: string;
+  description?: string;
+  category: ItemCategory;
+  stats?: {
+    attack?: number;
+    defense?: number;
+  };
+}
+
+// Character state
+export interface CharacterHealth {
+  condition: HealthCondition;
+  additional: string[]; // Temporary conditions: "poisoned", "cursed", etc.
+}
+
+export interface Character {
+  health: CharacterHealth;
+  armor: string[];      // Item IDs
+  weapons: string[];    // Item IDs
+  magic: string[];      // Item IDs
+  equipment: string[];  // Item IDs
+  gold: number;
+  silver: number;
+}
+
+// Choice effects
+export interface ChoiceEffects {
+  // Health
+  injure?: number;
+  heal?: number;
+  addCondition?: string;
+  removeCondition?: string;
+
+  // Items (by ID)
+  addItems?: {
+    armor?: string[];
+    weapons?: string[];
+    magic?: string[];
+    equipment?: string[];
+  };
+  removeItems?: {
+    armor?: string[];
+    weapons?: string[];
+    magic?: string[];
+    equipment?: string[];
+  };
+
+  // Currency
+  addGold?: number;
+  addSilver?: number;
+
+  // Story tracking
+  setFlag?: Record<string, string | boolean | number>;
+  addPath?: string;
+}
+
 export interface Choice {
   text: string;
   nextSceneId: string;
-  setFlags?: Record<string, string | boolean | number>;
-  condition?: string; // If set, choice only shows when condition evaluates to true
-  addItems?: { equipment?: string[]; valuables?: string[] };
-  removeItems?: { equipment?: string[]; valuables?: string[] };
+  condition?: string;
+  effects?: ChoiceEffects;
 }
 
 export interface Scene {
   id: string;
   text: string;
   choices: Choice[];
-  // For scenes with dynamic text based on flags
   textVariants?: {
     condition: string;
     text: string;
@@ -21,7 +106,6 @@ export interface Scene {
 export interface ChapterData {
   chapter: number;
   title: string;
-  initialFlags: Record<string, string | boolean | number>;
   startSceneId: string;
   scenes: Scene[];
 }
@@ -29,16 +113,16 @@ export interface ChapterData {
 export interface GameState {
   currentChapter: number;
   currentSceneId: string;
-  flags: Record<string, string | boolean | number>;
   history: string[];
-  chapterOutcomes: Record<number, string>; // chapter number -> outcome id
-  character: CharacterInventory;
+  storyFlags: Record<string, string | boolean | number>;
+  completedPaths: string[];
+  character: Character;
 }
 
-// New: Condition-based diary rules
+// Diary system
 export interface DiaryRule {
   id: string;
-  condition: string; // e.g., "helped && payment === 'noble'"
+  condition: string;
   text: string;
 }
 
@@ -46,17 +130,4 @@ export interface DiaryChapter {
   chapter: number;
   title: string;
   rules: DiaryRule[];
-}
-
-// Legacy support (can remove later)
-export interface DiaryEntry {
-  id: string;
-  unlockSceneId: string;
-  text: string;
-}
-
-// Character inventory - derived from flags
-export interface CharacterInventory {
-  equipment: string[];
-  valuables: string[];
 }

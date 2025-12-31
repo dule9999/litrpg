@@ -67,3 +67,24 @@
 .character-item-none::before {
   content: '';
 }
+
+.character-health {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.character-health-condition,
+.character-health-additional {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.character-health-label {
+  color: #6a6a8a;
+}
+
+.character-health-value {
+  color: #a0a0b0;
+}

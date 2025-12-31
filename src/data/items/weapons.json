@@ -1,0 +1,65 @@
+{
+  "rusty_sword": {
+    "id": "rusty_sword",
+    "name": "Rusty sword",
+    "description": "A notched and stained blade, but the edge is keen.",
+    "category": "weapon",
+    "stats": {
+      "attack": 1
+    }
+  },
+  "steel_sword": {
+    "id": "steel_sword",
+    "name": "Steel sword",
+    "description": "A well-forged blade of good steel.",
+    "category": "weapon",
+    "stats": {
+      "attack": 2
+    }
+  },
+  "dagger": {
+    "id": "dagger",
+    "name": "Dagger",
+    "description": "A simple blade, easily concealed.",
+    "category": "weapon",
+    "stats": {
+      "attack": 1
+    }
+  },
+  "shortsword": {
+    "id": "shortsword",
+    "name": "Shortsword",
+    "description": "A light blade, quick to draw.",
+    "category": "weapon",
+    "stats": {
+      "attack": 1
+    }
+  },
+  "longsword": {
+    "id": "longsword",
+    "name": "Longsword",
+    "description": "A knight's weapon. Balanced and deadly.",
+    "category": "weapon",
+    "stats": {
+      "attack": 2
+    }
+  },
+  "woodsmans_axe": {
+    "id": "woodsmans_axe",
+    "name": "Woodsman's axe",
+    "description": "A heavy axe meant for trees, but effective against men.",
+    "category": "weapon",
+    "stats": {
+      "attack": 2
+    }
+  },
+  "crossbow": {
+    "id": "crossbow",
+    "name": "Crossbow",
+    "description": "A mechanical bow. Slow to reload but powerful.",
+    "category": "weapon",
+    "stats": {
+      "attack": 2
+    }
+  }
+}

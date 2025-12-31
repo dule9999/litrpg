@@ -1,0 +1,38 @@
+{
+  "silver_locket": {
+    "id": "silver_locket",
+    "name": "Silver locket",
+    "description": "A small locket on a chain. Empty inside.",
+    "category": "valuables"
+  },
+  "ruby_pendant": {
+    "id": "ruby_pendant",
+    "name": "Ruby pendant",
+    "description": "A blood-red ruby on a gold chain.",
+    "category": "valuables"
+  },
+  "gold_bracelet": {
+    "id": "gold_bracelet",
+    "name": "Gold bracelet",
+    "description": "A thick gold bracelet, finely worked.",
+    "category": "valuables"
+  },
+  "pearl_earring": {
+    "id": "pearl_earring",
+    "name": "Pearl earring",
+    "description": "A single pearl earring. Where's the other one?",
+    "category": "valuables"
+  },
+  "signet_ring": {
+    "id": "signet_ring",
+    "name": "Signet ring",
+    "description": "A ring bearing a noble house's seal.",
+    "category": "valuables"
+  },
+  "gemstone": {
+    "id": "gemstone",
+    "name": "Gemstone",
+    "description": "An uncut precious stone.",
+    "category": "valuables"
+  }
+}

@@ -3,7 +3,7 @@ import './Diary.css';
 
 export default function DiaryPage() {
   const gameState = loadGameState();
-  const chapters = getUnlockedChapters(gameState.flags, gameState.currentChapter);
+  const chapters = getUnlockedChapters(gameState);
 
   return (
     <div className="diary">

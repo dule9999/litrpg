@@ -1,0 +1,35 @@
+{
+  "healing_potion": {
+    "id": "healing_potion",
+    "name": "Healing potion",
+    "description": "A red liquid that mends wounds.",
+    "category": "magic"
+  },
+  "scroll_of_light": {
+    "id": "scroll_of_light",
+    "name": "Scroll of Light",
+    "description": "A spell scroll that creates magical illumination.",
+    "category": "magic"
+  },
+  "antidote": {
+    "id": "antidote",
+    "name": "Antidote",
+    "description": "A bitter draught that purges poison.",
+    "category": "magic"
+  },
+  "scroll_of_fire": {
+    "id": "scroll_of_fire",
+    "name": "Scroll of Fire",
+    "description": "A spell scroll that conjures flame.",
+    "category": "magic"
+  },
+  "amulet_of_protection": {
+    "id": "amulet_of_protection",
+    "name": "Amulet of Protection",
+    "description": "A blessed talisman that wards against harm.",
+    "category": "magic",
+    "stats": {
+      "defense": 1
+    }
+  }
+}

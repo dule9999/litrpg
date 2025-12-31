@@ -4,27 +4,27 @@
   "rules": [
     {
       "id": "diary_left_early",
-      "condition": "left_without_helping",
+      "condition": "completedPaths.includes('ch1_left')",
       "text": "Encountered an old man at a hovel, sleeping outside in fear of something in his cellar. Left without helping. Not my problem."
     },
     {
       "id": "diary_helped_noble",
-      "condition": "helped && payment === 'noble'",
+      "condition": "completedPaths.includes('ch1_noble')",
       "text": "Cleared the old man's cellar without asking for payment. He had nothing but a wedding ring - I let him keep it."
     },
     {
       "id": "diary_helped_greedy",
-      "condition": "helped && payment === 'greedy'",
+      "condition": "completedPaths.includes('ch1_greedy')",
       "text": "Cleared the old man's cellar. Took his wedding ring as payment - his dead wife's ring, all he had left of her."
     },
     {
       "id": "diary_creature",
-      "condition": "creature_killed",
+      "condition": "completedPaths.includes('ch1_creature')",
       "text": "Killed a corrupted rat in the cellar - bloated, twisted, weeping green pus. Whatever caused this mutation is not natural."
     },
     {
       "id": "diary_intel",
-      "condition": "payment === 'noble' && creature_killed",
+      "condition": "completedPaths.includes('ch1_intel')",
       "text": "The old man's reward: intel. Bandits hold the stone bridge to Millbrook. Six or more, careless at dawn. A ford lies two miles upstream."
     },
     {

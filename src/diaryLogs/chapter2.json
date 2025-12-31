@@ -4,37 +4,42 @@
   "rules": [
     {
       "id": "diary_ford_crossing",
-      "condition": "used_ford",
+      "condition": "completedPaths.includes('ch2_ford')",
       "text": "Crossed the river at a ford upstream. Avoided the old mill and bridge entirely. The old man's intel proved valuable."
     },
     {
       "id": "diary_bridge_attack",
-      "condition": "bandits_attacked",
+      "condition": "completedPaths.includes('ch2_bridge_attack')",
       "text": "Attacked the bandits at the bridge. Had the element of surprise. Killed several, including a big man with an axe. The survivors fled."
     },
     {
+      "id": "diary_killed_brother",
+      "condition": "killed_bandit_brother",
+      "text": "The big man I killed was Rodrik - someone's brother. A man named Garrett. The dying bandit's warning: he's coming for me."
+    },
+    {
       "id": "diary_bargain_fail",
-      "condition": "was_robbed && has_intel",
+      "condition": "completedPaths.includes('ch2_robbed_bargain')",
       "text": "Tried to bargain with the bandits. Offered my sword. They took everything and beat me. Should have attacked when I had the chance."
     },
     {
       "id": "diary_ambush_gave_ring",
-      "condition": "was_robbed && gave_ring_to_bandits",
+      "condition": "completedPaths.includes('ch2_gave_ring')",
       "text": "Walked into an ambush at the bridge. They took my horse and sword. Gave them the ring to avoid a beating. Left with nothing but my life."
     },
     {
       "id": "diary_ambush_hid_ring",
-      "condition": "was_robbed && has_ring",
+      "condition": "completedPaths.includes('ch2_beaten') && has_ring",
       "text": "Walked into an ambush. They took my horse and sword, then beat me. But I hid the ring in my boot. They didn't find it."
     },
     {
       "id": "diary_ambush_no_ring",
-      "condition": "was_robbed && !has_ring && !gave_ring_to_bandits && !has_intel",
+      "condition": "completedPaths.includes('ch2_beaten') && !has_ring",
       "text": "Walked into an ambush at the bridge. Had nothing of value. They beat me anyway for sport. Walked to Millbrook with nothing."
     },
     {
       "id": "diary_millbrook_arrival",
-      "condition": "chapter2_complete",
+      "condition": "completedPaths.includes('ch2_ford') || completedPaths.includes('ch2_bridge_attack') || completedPaths.includes('ch2_gave_ring') || completedPaths.includes('ch2_survived')",
       "text": "Reached Millbrook. A modest settlement in the valley. A place to rest and figure out what comes next."
     }
   ]

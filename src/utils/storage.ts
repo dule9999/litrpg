@@ -1,21 +1,40 @@
-import type { GameState } from '@types';
+import type { GameState, Character } from '@types';
 import { chapter1 } from '@scenes';
 
 const STORAGE_KEY = 'litrpg_game_state';
 
-const DEFAULT_CHARACTER = {
-  equipment: ['Rusty sword'],
-  valuables: [],
+const DEFAULT_CHARACTER: Character = {
+  health: {
+    condition: 'slightly_injured', // Start slightly injured from the war
+    additional: [],
+  },
+  armor: [],
+  weapons: ['rusty_sword'],
+  magic: [],
+  equipment: [],
+  gold: 0,
+  silver: 0,
 };
 
 const DEFAULT_STATE: GameState = {
   currentChapter: 1,
   currentSceneId: chapter1.startSceneId,
-  flags: { ...chapter1.initialFlags },
   history: [],
-  chapterOutcomes: {},
-  character: { ...DEFAULT_CHARACTER },
+  storyFlags: {},
+  completedPaths: [],
+  character: { ...DEFAULT_CHARACTER, health: { ...DEFAULT_CHARACTER.health } },
 };
+
+function cloneCharacter(char: Character): Character {
+  return {
+    ...char,
+    health: { ...char.health, additional: [...char.health.additional] },
+    armor: [...char.armor],
+    weapons: [...char.weapons],
+    magic: [...char.magic],
+    equipment: [...char.equipment],
+  };
+}
 
 export function loadGameState(): GameState {
   try {
@@ -25,15 +44,17 @@ export function loadGameState(): GameState {
       return {
         ...DEFAULT_STATE,
         ...parsed,
-        flags: parsed.flags || { ...chapter1.initialFlags },
-        chapterOutcomes: parsed.chapterOutcomes || {},
-        character: parsed.character || { ...DEFAULT_CHARACTER },
+        storyFlags: parsed.storyFlags || {},
+        completedPaths: parsed.completedPaths || [],
+        character: parsed.character
+          ? cloneCharacter(parsed.character)
+          : cloneCharacter(DEFAULT_CHARACTER),
       };
     }
   } catch (e) {
     console.error('Failed to load game state:', e);
   }
-  return { ...DEFAULT_STATE, character: { ...DEFAULT_CHARACTER } };
+  return { ...DEFAULT_STATE, character: cloneCharacter(DEFAULT_CHARACTER) };
 }
 
 export function saveGameState(state: GameState): void {
@@ -46,5 +67,5 @@ export function saveGameState(state: GameState): void {
 
 export function resetGameState(): GameState {
   localStorage.removeItem(STORAGE_KEY);
-  return { ...DEFAULT_STATE, flags: { ...chapter1.initialFlags }, character: { ...DEFAULT_CHARACTER } };
+  return { ...DEFAULT_STATE, character: cloneCharacter(DEFAULT_CHARACTER) };
 }

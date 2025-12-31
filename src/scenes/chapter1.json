@@ -1,14 +1,6 @@
 {
   "chapter": 1,
   "title": "The Old Man's Hovel",
-  "initialFlags": {
-    "helped": false,
-    "payment": "none",
-    "creature_killed": false,
-    "has_intel": false,
-    "has_ring": false,
-    "left_without_helping": false
-  },
   "startSceneId": "arrival",
   "scenes": [
     {
@@ -26,12 +18,18 @@
         {
           "text": "\"I've seen my share of dark things. Show me this cellar.\"",
           "nextSceneId": "payment_decision",
-          "setFlags": { "helped": true }
+          "effects": {
+            "setFlag": { "helped": true },
+            "addPath": "ch1_helped"
+          }
         },
         {
           "text": "\"Not my problem, old man. I've got my own troubles.\"",
           "nextSceneId": "ending_left",
-          "setFlags": { "left_without_helping": true }
+          "effects": {
+            "setFlag": { "left_without_helping": true },
+            "addPath": "ch1_left"
+          }
         }
       ]
     },
@@ -42,13 +40,19 @@
         {
           "text": "\"Keep your ring, old man. I'll do this for nothing.\"",
           "nextSceneId": "confrontation",
-          "setFlags": { "payment": "noble" }
+          "effects": {
+            "setFlag": { "payment": "noble" },
+            "addPath": "ch1_noble"
+          }
         },
         {
           "text": "\"That ring on your finger. That'll do as payment.\"",
           "nextSceneId": "confrontation",
-          "setFlags": { "payment": "greedy", "has_ring": true },
-          "addItems": { "valuables": ["Gold ring"] }
+          "effects": {
+            "setFlag": { "payment": "greedy", "has_ring": true },
+            "addItems": { "equipment": ["gold_ring"] },
+            "addPath": "ch1_greedy"
+          }
         }
       ]
     },
@@ -59,7 +63,11 @@
         {
           "text": "...",
           "nextSceneId": "resolution",
-          "setFlags": { "creature_killed": true }
+          "effects": {
+            "setFlag": { "creature_killed": true },
+            "injure": 1,
+            "addPath": "ch1_creature"
+          }
         }
       ]
     },
@@ -81,7 +89,10 @@
           "text": "Continue to Chapter 2",
           "nextSceneId": "approach",
           "condition": "payment === 'noble'",
-          "setFlags": { "has_intel": true }
+          "effects": {
+            "setFlag": { "has_intel": true },
+            "addPath": "ch1_intel"
+          }
         },
         {
           "text": "Continue to Chapter 2",

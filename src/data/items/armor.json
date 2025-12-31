@@ -1,0 +1,40 @@
+{
+  "leather_armor": {
+    "id": "leather_armor",
+    "name": "Leather armor",
+    "description": "Boiled leather fitted for protection.",
+    "category": "armor",
+    "stats": {
+      "defense": 1
+    }
+  },
+  "chainmail": {
+    "id": "chainmail",
+    "name": "Chainmail",
+    "description": "Interlocking metal rings. Heavy but protective.",
+    "category": "armor",
+    "stats": {
+      "defense": 2,
+      "attack": -1
+    }
+  },
+  "padded_gambeson": {
+    "id": "padded_gambeson",
+    "name": "Padded gambeson",
+    "description": "Quilted cloth armor. Light and quiet.",
+    "category": "armor",
+    "stats": {
+      "defense": 1
+    }
+  },
+  "plate_cuirass": {
+    "id": "plate_cuirass",
+    "name": "Plate cuirass",
+    "description": "Solid steel breastplate. Excellent protection.",
+    "category": "armor",
+    "stats": {
+      "defense": 3,
+      "attack": -1
+    }
+  }
+}

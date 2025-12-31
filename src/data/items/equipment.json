@@ -1,0 +1,68 @@
+{
+  "gold_ring": {
+    "id": "gold_ring",
+    "name": "Gold ring",
+    "description": "A gold ring with a ruby. Someone's wedding ring.",
+    "category": "equipment"
+  },
+  "rope": {
+    "id": "rope",
+    "name": "Rope",
+    "description": "Fifty feet of hempen rope.",
+    "category": "equipment"
+  },
+  "thieves_tools": {
+    "id": "thieves_tools",
+    "name": "Thieves' tools",
+    "description": "Lockpicks, a small file, and other implements.",
+    "category": "equipment"
+  },
+  "torch": {
+    "id": "torch",
+    "name": "Torch",
+    "description": "A wooden torch soaked in pitch.",
+    "category": "equipment"
+  },
+  "lantern": {
+    "id": "lantern",
+    "name": "Lantern",
+    "description": "An oil lantern. Steadier light than a torch.",
+    "category": "equipment"
+  },
+  "grappling_hook": {
+    "id": "grappling_hook",
+    "name": "Grappling hook",
+    "description": "A three-pronged iron hook for climbing.",
+    "category": "equipment"
+  },
+  "bedroll": {
+    "id": "bedroll",
+    "name": "Bedroll",
+    "description": "A rolled blanket for sleeping outdoors.",
+    "category": "equipment"
+  },
+  "waterskin": {
+    "id": "waterskin",
+    "name": "Waterskin",
+    "description": "A leather container for water.",
+    "category": "equipment"
+  },
+  "rations": {
+    "id": "rations",
+    "name": "Rations",
+    "description": "Dried meat and hardtack. A day's worth of food.",
+    "category": "equipment"
+  },
+  "flint_and_steel": {
+    "id": "flint_and_steel",
+    "name": "Flint and steel",
+    "description": "For starting fires.",
+    "category": "equipment"
+  },
+  "bandages": {
+    "id": "bandages",
+    "name": "Bandages",
+    "description": "Clean cloth strips for binding wounds.",
+    "category": "equipment"
+  }
+}
